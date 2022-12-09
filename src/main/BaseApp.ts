@@ -1,4 +1,4 @@
-import 'reflect-metadata;';
+import 'reflect-metadata';
 
 import { Logger } from '@nodescript/logger';
 import { dep, Mesh } from '@nodescript/mesh';
