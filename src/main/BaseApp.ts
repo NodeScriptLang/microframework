@@ -1,8 +1,8 @@
 import 'reflect-metadata';
 
 import { Logger } from '@nodescript/logger';
-import { dep, Mesh } from '@nodescript/mesh';
 import dotenv from 'dotenv';
+import { dep, Mesh } from 'mesh-ioc';
 
 export abstract class BaseApp {
 
