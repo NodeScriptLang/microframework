@@ -1,5 +1,5 @@
-import { config } from '@nodescript/config';
 import { ConsoleLogger, LogfmtLogger, Logger, LogLevel } from '@nodescript/logger';
+import { config } from 'mesh-config';
 
 export class StandardLogger extends Logger {
 
