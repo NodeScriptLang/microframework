@@ -17,7 +17,7 @@ export abstract class BaseApp {
 
     async run() {
         try {
-            dotenv.config();
+            dotenv.config({ path: '.env' });
             if (process.env.NODE_ENV === 'development') {
                 dotenv.config({ path: '.env.dev' });
             }
