@@ -47,6 +47,7 @@ export abstract class BaseApp {
      */
     async run() {
         try {
+            this.configure();
             process.removeAllListeners();
             process.on('uncaughtException', error => {
                 this.logger.error('uncaughtException', { error });
