@@ -31,7 +31,7 @@ export abstract class BaseApp {
      * Read .env files according to NODE_ENV.
      * Called on production startup and during tests.
      */
-    async configure() {
+    configure() {
         dotenv.config({ path: '.env' });
         if (process.env.NODE_ENV === 'development') {
             dotenv.config({ path: '.env.dev' });
