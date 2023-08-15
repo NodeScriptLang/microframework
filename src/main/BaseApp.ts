@@ -19,19 +19,7 @@ export abstract class BaseApp {
      * Application initialization code.
      * Called on production startup and during tests.
      */
-    abstract start(): Promise<void>;
-
-    /**
-     * Application shutdown code.
-     * Called when production app gracefully terminates and during tests.
-     */
-    abstract stop(): Promise<void>;
-
-    /**
-     * Read .env files according to NODE_ENV.
-     * Called on production startup and during tests.
-     */
-    configure() {
+    async start() {
         dotenv.config({ path: '.env' });
         if (process.env.NODE_ENV === 'development') {
             dotenv.config({ path: '.env.dev' });
@@ -39,6 +27,15 @@ export abstract class BaseApp {
         if (process.env.NODE_ENV === 'test') {
             dotenv.config({ path: '.env.test' });
         }
+        this.logger.info('Starting application');
+    }
+
+    /**
+     * Application shutdown code.
+     * Called when production app gracefully terminates and during tests.
+     */
+    async stop() {
+        this.logger.info('Stopping application');
     }
 
     /**
@@ -47,7 +44,6 @@ export abstract class BaseApp {
      */
     async run() {
         try {
-            this.configure();
             process.removeAllListeners();
             process.on('uncaughtException', error => {
                 this.logger.error('uncaughtException', { error });
@@ -76,7 +72,6 @@ export abstract class BaseApp {
      */
     async shutdown() {
         try {
-            this.logger.info('Application shutting down');
             process.removeAllListeners();
             await this.stop();
             process.exit(0);
