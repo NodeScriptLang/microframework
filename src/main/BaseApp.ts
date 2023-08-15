@@ -4,6 +4,9 @@ import { Logger } from '@nodescript/logger';
 import dotenv from 'dotenv';
 import { dep, Mesh } from 'mesh-ioc';
 
+/**
+ * Common application setup with Mesh IoC, logger and start/stop hooks.
+ */
 export abstract class BaseApp {
 
     @dep() logger!: Logger;
@@ -12,18 +15,38 @@ export abstract class BaseApp {
         this.mesh.connect(this);
     }
 
+    /**
+     * Application initialization code.
+     * Called on production startup and during tests.
+     */
     abstract start(): Promise<void>;
+
+    /**
+     * Application shutdown code.
+     * Called when production app gracefully terminates and during tests.
+     */
     abstract stop(): Promise<void>;
 
+    /**
+     * Read .env files according to NODE_ENV.
+     * Called on production startup and during tests.
+     */
+    async configure() {
+        dotenv.config({ path: '.env' });
+        if (process.env.NODE_ENV === 'development') {
+            dotenv.config({ path: '.env.dev' });
+        }
+        if (process.env.NODE_ENV === 'test') {
+            dotenv.config({ path: '.env.test' });
+        }
+    }
+
+    /**
+     * The method called by application entrypoint.
+     * Tests do not use that.
+     */
     async run() {
         try {
-            dotenv.config({ path: '.env' });
-            if (process.env.NODE_ENV === 'development') {
-                dotenv.config({ path: '.env.dev' });
-            }
-            if (process.env.NODE_ENV === 'test') {
-                dotenv.config({ path: '.env.test' });
-            }
             process.removeAllListeners();
             process.on('uncaughtException', error => {
                 this.logger.error('uncaughtException', { error });
@@ -46,6 +69,10 @@ export abstract class BaseApp {
         }
     }
 
+    /**
+     * Called on SIGTERM/SIGINT, when the app is running using `run()`.
+     * Tests do not use that.
+     */
     async shutdown() {
         try {
             this.logger.info('Application shutting down');
