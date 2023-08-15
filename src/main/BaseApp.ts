@@ -18,10 +18,13 @@ export abstract class BaseApp {
     async run() {
         try {
             dotenv.config();
-            process.removeAllListeners();
             if (process.env.NODE_ENV === 'development') {
                 dotenv.config({ path: '.env.dev' });
             }
+            if (process.env.NODE_ENV === 'test') {
+                dotenv.config({ path: '.env.test' });
+            }
+            process.removeAllListeners();
             process.on('uncaughtException', error => {
                 this.logger.error('uncaughtException', { error });
             });
