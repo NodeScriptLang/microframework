@@ -1,21 +1,15 @@
-import { ConsoleLogger, LogfmtLogger, Logger, LogLevel } from '@nodescript/logger';
+import { ConsoleLogger, DefaultLogFormatter, StructuredLogFormatter } from '@nodescript/logger';
 import { config } from 'mesh-config';
 
-export class StandardLogger extends Logger {
+export class StandardLogger extends ConsoleLogger {
 
     @config({ default: 'info' }) LOG_LEVEL!: string;
     @config({ default: false }) LOG_PRETTY!: boolean;
 
-    private delegate: Logger;
-
     constructor() {
         super();
-        this.delegate = this.LOG_PRETTY ? new ConsoleLogger() : new LogfmtLogger();
+        this.formatter = this.LOG_PRETTY ? new DefaultLogFormatter() : new StructuredLogFormatter();
         this.setLevel(this.LOG_LEVEL);
-    }
-
-    override write(level: LogLevel, message: string, data: object): void {
-        this.delegate.write(level, message, data);
     }
 
 }
