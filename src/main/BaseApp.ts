@@ -4,6 +4,8 @@ import { Logger } from '@nodescript/logger';
 import dotenv from 'dotenv';
 import { dep, Mesh } from 'mesh-ioc';
 
+const process = global.process;
+
 /**
  * Common application setup with Mesh IoC, logger and start/stop hooks.
  */
