@@ -41,6 +41,7 @@
         "typescript": "^4.9.5"
     },
     "dependencies": {
+        "@nodescript/errors": "^1.1.4",
         "@nodescript/http-server": "^2.3.2",
         "@nodescript/logger": "^2.0.2",
         "dotenv": "^16.0.3",

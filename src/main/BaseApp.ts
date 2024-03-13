@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 
+import { InitializationError } from '@nodescript/errors';
 import { Logger } from '@nodescript/logger';
 import dotenv from 'dotenv';
 import { dep, Mesh } from 'mesh-ioc';
@@ -27,6 +28,7 @@ export abstract class BaseApp {
             dotenv.config({ path: '.env.dev' });
         }
         if (process.env.NODE_ENV === 'test') {
+            dotenv.config({ path: '.env.dev' });
             dotenv.config({ path: '.env.test' });
         }
         this.logger.info('Starting application');
@@ -80,6 +82,13 @@ export abstract class BaseApp {
         } catch (error) {
             this.logger.error(`Failed to stop ${this.constructor.name}`, { error });
             process.exit(1);
+        }
+    }
+
+    assertMissingDeps() {
+        const missingDepKeys = [...this.mesh.missingDeps()].map(_ => _.key);
+        if (missingDepKeys.length > 0) {
+            throw new InitializationError(`The following class dependencies are not found in application global scope: ${missingDepKeys}`);
         }
     }
 
