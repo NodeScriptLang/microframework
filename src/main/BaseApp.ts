@@ -23,7 +23,6 @@ export abstract class BaseApp {
      * Called on production startup and during tests.
      */
     async start() {
-        this.assertMissingDeps();
         dotenv.config({ path: '.env' });
         if (process.env.NODE_ENV === 'development') {
             dotenv.config({ path: '.env.dev' });
@@ -32,6 +31,7 @@ export abstract class BaseApp {
             dotenv.config({ path: '.env.dev' });
             dotenv.config({ path: '.env.test' });
         }
+        this.assertMissingDeps();
         this.logger.info('Starting application');
     }
 
