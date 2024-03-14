@@ -28,8 +28,8 @@ export abstract class BaseApp {
             dotenv.config({ path: '.env.dev' });
         }
         if (process.env.NODE_ENV === 'test') {
-            dotenv.config({ path: '.env.dev' });
             dotenv.config({ path: '.env.test' });
+            dotenv.config({ path: '.env.dev' });
         }
         this.assertMissingDeps();
         this.logger.info('Starting application');
