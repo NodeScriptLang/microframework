@@ -1,6 +1,7 @@
 import 'reflect-metadata';
 
 import { InitializationError } from '@nodescript/errors';
+import { HttpCorsHandler, HttpErrorHandler, HttpMetricsHandler, HttpStatusHandler } from '@nodescript/http-server';
 import { Logger } from '@nodescript/logger';
 import dotenv from 'dotenv';
 import { Config, ProcessEnvConfig } from 'mesh-config';
@@ -25,6 +26,11 @@ export abstract class BaseApp {
         this.mesh.service(Logger, StandardLogger);
         this.mesh.service(ProcessMetrics);
         this.mesh.service(AuxHttpServer);
+        // Global Handlers
+        this.mesh.service(HttpCorsHandler);
+        this.mesh.service(HttpErrorHandler);
+        this.mesh.service(HttpMetricsHandler);
+        this.mesh.service(HttpStatusHandler);
     }
 
     /**
