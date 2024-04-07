@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 import { Config, ProcessEnvConfig } from 'mesh-config';
 import { dep, Mesh } from 'mesh-ioc';
 
+import { AuxHttpServer } from './AuxHttpServer.js';
 import { ProcessMetrics } from './ProcessMetrics.js';
 import { StandardLogger } from './StandardLogger.js';
 
@@ -23,6 +24,7 @@ export abstract class BaseApp {
         this.mesh.service(Config, ProcessEnvConfig);
         this.mesh.service(Logger, StandardLogger);
         this.mesh.service(ProcessMetrics);
+        this.mesh.service(AuxHttpServer);
     }
 
     /**
