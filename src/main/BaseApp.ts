@@ -13,6 +13,8 @@ import { StandardLogger } from './StandardLogger.js';
 
 const process = global.process;
 
+export type EnvName = 'development' | 'test' | 'production';
+
 /**
  * Common application setup with Mesh IoC, logger and start/stop hooks.
  */
@@ -33,16 +35,26 @@ export abstract class BaseApp {
         this.mesh.service(HttpStatusHandler);
     }
 
+    get envName(): EnvName {
+        if (process.env.NODE_ENV === 'development') {
+            return 'development';
+        }
+        if (process.env.NODE_ENV === 'test') {
+            return 'test';
+        }
+        return 'production';
+    }
+
     /**
      * Application initialization code.
      * Called on production startup and during tests.
      */
     async start() {
         dotenv.config({ path: '.env' });
-        if (process.env.NODE_ENV === 'development') {
+        if (this.envName === 'development') {
             dotenv.config({ path: '.env.dev' });
         }
-        if (process.env.NODE_ENV === 'test') {
+        if (this.envName === 'test') {
             dotenv.config({ path: '.env.test' });
             dotenv.config({ path: '.env.dev' });
         }
