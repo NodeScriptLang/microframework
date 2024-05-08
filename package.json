@@ -1,6 +1,6 @@
 {
     "name": "@nodescript/microframework",
-    "version": "1.11.3",
+    "version": "1.11.4",
     "description": "Common Microservice Framework",
     "type": "module",
     "sideEffects": false,
