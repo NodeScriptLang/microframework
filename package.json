@@ -43,7 +43,7 @@
     },
     "dependencies": {
         "@nodescript/errors": "^1.2.0",
-        "@nodescript/http-server": "^2.6.0",
+        "@nodescript/http-server": "^2.7.0",
         "@nodescript/logger": "^2.0.6",
         "@nodescript/metrics": "^1.5.0",
         "airtight": "^5.7.2",
