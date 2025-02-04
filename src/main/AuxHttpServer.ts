@@ -15,6 +15,11 @@ export class AuxHttpServer extends HttpServer {
         super();
         this.config.port = this.AUX_HTTP_PORT;
         this.config.shutdownDelay = 0;
+        // TLS is not used for aux http server by default
+        this.config.tlsCert = undefined;
+        this.config.tlsKey = undefined;
+        this.config.tlsCa = undefined;
+        this.config.tlsCiphers = undefined;
     }
 
     protected handler = new HttpChain([
