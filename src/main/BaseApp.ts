@@ -46,10 +46,10 @@ export abstract class BaseApp {
     }
 
     /**
-     * Application initialization code.
-     * Called on production startup and during tests.
+     * Configures environment variables from .env files.
+     * Can be called explicitly when needed (e.g., in tests before app.start()).
      */
-    async start() {
+    configureEnv(): void {
         dotenv.config({ path: '.env' });
         if (this.envName === 'development') {
             dotenv.config({ path: '.env.dev' });
@@ -58,6 +58,14 @@ export abstract class BaseApp {
             dotenv.config({ path: '.env.test' });
             dotenv.config({ path: '.env.dev' });
         }
+    }
+
+    /**
+     * Application initialization code.
+     * Called on production startup and during tests.
+     */
+    async start() {
+        this.configureEnv();
         this.assertMissingDeps();
         this.logger.info('Starting application');
     }
