@@ -21,6 +21,7 @@ export type EnvName = 'development' | 'test' | 'production';
 export abstract class BaseApp {
 
     @dep() logger!: Logger;
+    @dep() processEnvConfig!: ProcessEnvConfig;
 
     constructor(readonly mesh: Mesh) {
         this.mesh.connect(this);
@@ -59,6 +60,7 @@ export abstract class BaseApp {
             dotenv.config({ path: '.env.test' });
             dotenv.config({ path: '.env.dev' });
         }
+        this.processEnvConfig.refresh();
         this.assertMissingDeps();
         this.logger.info('Starting application');
     }
