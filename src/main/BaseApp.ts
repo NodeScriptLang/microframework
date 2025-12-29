@@ -24,7 +24,8 @@ export abstract class BaseApp {
 
     constructor(readonly mesh: Mesh) {
         this.mesh.connect(this);
-        this.mesh.service(Config, ProcessEnvConfig);
+        this.mesh.service(ProcessEnvConfig);
+        this.mesh.alias(Config, ProcessEnvConfig);
         this.mesh.service(Logger, StandardLogger);
         this.mesh.service(ProcessMetrics);
         this.mesh.service(AuxHttpServer);
